@@ -89,6 +89,14 @@ class App():
         row += 1
 
 
+        # add checkbox to toggle playback loop
+        self.var_loop = tk.IntVar()
+        self.chk_loop = ttk.Checkbutton(self.root, text="Loop Playback", variable=self.var_loop, onvalue=1, offvalue=0)
+        self.chk_loop.grid(row=row, padx=5)
+
+        row += 1
+
+
         # create separator to visually seperate the entries for the hotkeys and the entry for the file path
         self.sep_file = ttk.Separator(self.root, orient="horizontal")
         self.sep_file.grid(row=row, column=0, sticky=tk.EW, columnspan=3, padx=5, pady=5)
@@ -270,6 +278,8 @@ class App():
                 }
                 self.playback_paused = True
                 self.btn_play.configure(image=self.btn_play_img)
+                if self.var_loop.get():
+                    self.btn_play_hook()
         self.root.after(1, self.playback_listener)
 
     def btn_save_hook(self):
